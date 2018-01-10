@@ -1,5 +1,5 @@
-# chartAnalysis
-[![Build Status](https://travis-ci.org/margorec/chartAnalysis.svg?branch=master)
+# Chart Analysis
+[![Build Status](https://travis-ci.org/margorec/chartAnalysis.svg?branch=master)](https://travis-ci.org/margorec/chartAnalysis)
 
 Just started simple stock market analysing app. So far only fetches price timeseries of one company and draws a price chart.
 

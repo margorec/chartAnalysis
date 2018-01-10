@@ -1,13 +1,12 @@
 package com.marcingorecki.ChartAnalysis.controller;
 
+import com.marcingorecki.ChartAnalysis.domain.Triplet;
 import com.marcingorecki.ChartAnalysis.service.Parser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.time.LocalDate;
-import java.util.Map;
-
+import java.util.*;
 
 @Controller
 public class WelcomeController {
@@ -22,7 +21,14 @@ public class WelcomeController {
     @RequestMapping("/")
     public String welcome(Map<String, Object> model) {
         Map<String, Double> data = parser.parseToTimeseries();
-        model.put("chartData", data);
+        Map<String, Triplet> chartData = new LinkedHashMap<>();
+
+        data.keySet().stream()
+                .map(k ->  chartData.put(
+                        k,
+                        new Triplet(data.get(k), 30d, 35d))).count();
+
+        model.put("chartData", chartData);
         return "welcome";
     }
 

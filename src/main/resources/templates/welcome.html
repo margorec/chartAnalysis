@@ -19,7 +19,9 @@
 
         var data = new google.visualization.DataTable();
         data.addColumn('date', 'X');
-        data.addColumn('number', 'Dogs');
+        data.addColumn('number', 'Price');
+        data.addColumn('number', 'Short moving avg');
+        data.addColumn('number', 'Long moving avg');
 
         var chartRawData = [[${chartData}]];
         var dataArray = [];
@@ -27,7 +29,9 @@
         for (var key in chartRawData) {
             var rowArray = [];
             rowArray.push(new Date(key));
-            rowArray.push(chartRawData[key]);
+            rowArray.push(chartRawData[key].price);
+            rowArray.push(chartRawData[key].shortAvgValue);
+            rowArray.push(chartRawData[key].longAvgValue);
             dataArray.push(rowArray);
         }
 
@@ -53,12 +57,11 @@
 <nav class="navbar navbar-inverse">
     <div class="container">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Spring Boot</a>
+            <a class="navbar-brand" href="#">Simple stock tech analysis</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="active"><a href="#">Home</a></li>
-                <li><a href="#about">About</a></li>
             </ul>
         </div>
     </div>

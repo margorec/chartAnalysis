@@ -3,9 +3,9 @@ package com.marcingorecki.ChartAnalysis.domain;
 import java.util.Objects;
 
 public class Triplet {
-    private Double price;
-    private Double shortAvgValue;
-    private Double longAvgValue;
+    private final Double price;
+    private final Double shortAvgValue;
+    private final Double longAvgValue;
 
     public Triplet(Double price, Double shortAvgValue, Double longAvgValue) {
         this.price = price;

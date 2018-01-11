@@ -1,6 +1,5 @@
 package com.marcingorecki.ChartAnalysis.service;
 
-import com.marcingorecki.ChartAnalysis.domain.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +8,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.SortedMap;
 
 @Service
 public class StooqParser {
@@ -30,7 +28,7 @@ public class StooqParser {
     }
 
     private Map<String, Double> parseToTimeseries(String data) {
-        Map<String, Double> result = new LinkedHashMap<String, Double>();
+        Map<String, Double> result = new LinkedHashMap<>();
         String[] lines = data.split(NEW_LINE_DELIMITER);
         Arrays.stream(lines).skip(1).forEach(line -> {
             String[] fields = line.split(FIELD_DELIMITER);

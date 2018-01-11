@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class Downloader {
 
-    String ASSET_DATA_URL = "https://stooq.pl/q/d/l/?s=ply&i=d";
+    final String ASSET_DATA_URL = "https://stooq.pl/q/d/l/?s=ply&i=d";
 
     public String download() {
         RestTemplate restTemplate = new RestTemplate();

@@ -1,5 +1,6 @@
 package com.marcingorecki.ChartAnalysis.service;
 
+import com.marcingorecki.ChartAnalysis.domain.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,9 +9,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.SortedMap;
 
 @Service
-public class Parser {
+public class StooqParser {
 
     private static final String FIELD_DELIMITER = "," ;
     private static final String NEW_LINE_DELIMITER = "\\r?\\n";
@@ -18,22 +20,20 @@ public class Parser {
     private final Downloader downloader;
 
     @Autowired
-    public Parser(Downloader downloader) {
+    public StooqParser(Downloader downloader) {
         this.downloader = downloader;
     }
 
-    public Map<String, Double> parseToTimeseries() {
+    public Map<String, Double> downloadAndProcess() {
         String data = downloader.download();
-        return fetchDateAndFinalPrice(data);
+        return parseToTimeseries(data);
     }
 
-    private Map<String, Double> fetchDateAndFinalPrice(String data) {
-        Map<String, Double> result = new LinkedHashMap<>();
+    private Map<String, Double> parseToTimeseries(String data) {
+        Map<String, Double> result = new LinkedHashMap<String, Double>();
         String[] lines = data.split(NEW_LINE_DELIMITER);
         Arrays.stream(lines).skip(1).forEach(line -> {
-
             String[] fields = line.split(FIELD_DELIMITER);
-            System.out.println(fields[0]);
             result.put(parseDate(fields[0]), Double.valueOf(fields[3]));
         });
         return result;
@@ -43,4 +43,5 @@ public class Parser {
         LocalDate date = LocalDate.parse(dateString);
         return date.format(FORMATTER);
     }
+
 }

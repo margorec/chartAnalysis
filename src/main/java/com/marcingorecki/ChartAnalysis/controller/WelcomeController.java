@@ -29,13 +29,14 @@ public class WelcomeController {
         Map<String, Double> data = parser.downloadAndProcess();
         Map<String, Double> shortMovingAvg = timeseriesProcessor.getMovingAverage(data, 5);
         Map<String, Double> longMovingAvg = timeseriesProcessor.getMovingAverage(data, 20);
-        Map<String, Triplet> chartData = new LinkedHashMap<>();
 
-        data.keySet()
+
+        Map<String, Triplet> chartData = data.keySet()
                 .stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
-                        k -> new Triplet(data.get(k), shortMovingAvg.get(k), longMovingAvg.get(k))
+                        k -> new Triplet(data.get(k), shortMovingAvg.get(k), longMovingAvg.get(k)),
+                        (a, b) -> a, LinkedHashMap::new
                 ));
 
         model.put("chartData", chartData);

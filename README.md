@@ -1,6 +1,7 @@
 ## Chart Analysis [![Build Status](https://travis-ci.org/margorec/chartAnalysis.svg?branch=master)](https://travis-ci.org/margorec/chartAnalysis)
 > Check the latest beta build [here at AWS Elastic Beanstalk](http://chart-analysis.eu-central-1.elasticbeanstalk.com/)
-Just started simple stock market analysing app. So far:
+
+Its a stock market analysing app. So far:
   - it downloads stock data from stooq.pl
   - presents price time series for one company and draws a *end day* price chart
   - basing on fetched data it calulates moving averages 

@@ -1,8 +1,12 @@
 package com.marcingorecki.ChartAnalysis.domain;
 
-public class AssetSymbol {
+public class Asset {
 
     private String symbol;
+
+    public Asset(String symbol) {
+        this.symbol = symbol;
+    }
 
     public String getSymbol() {
         return symbol;

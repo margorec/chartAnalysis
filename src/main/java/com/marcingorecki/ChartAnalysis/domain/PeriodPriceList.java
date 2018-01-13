@@ -13,7 +13,10 @@ public class PeriodPriceList extends LinkedList<Double> {
     }
 
     public Double average() {
-         return this.stream().mapToDouble(a -> a).average().getAsDouble();
+         return this.stream()
+                 .mapToDouble(a -> a)
+                 .average()
+                 .getAsDouble();
     }
 
     @Override

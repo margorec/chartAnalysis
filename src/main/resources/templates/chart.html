@@ -70,7 +70,7 @@
             <a class="navbar-brand" href="#">Stock Analysis</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse-01">
-            <form class="navbar-form navbar-right" method="post" action="#" th:action="@{/welcome}" th:object="${assetSymbol}" role="search">
+            <form class="navbar-form navbar-right" method="post" action="#" th:action="@{/chart}" th:object="${asset}" role="search">
                 <div class="form-group">
                     <div class="input-group">
                         <input class="form-control" id="navbarInput-01" type="search" th:field="*{symbol}" placeholder="Search" />
@@ -87,7 +87,7 @@
 <div class="container">
     <div class="">
         <h4 th:inline="text" >
-            [[${assetSymbol.symbol}]]
+            [[${asset.symbol}]]
         </h4>
     </div>
 </div>

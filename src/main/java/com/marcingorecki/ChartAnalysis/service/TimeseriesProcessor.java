@@ -10,6 +10,10 @@ import java.util.stream.Collectors;
 public class TimeseriesProcessor {
 
     public Map<String, Double> getMovingAverage(Map<String, Double> timeseries, int offset) {
+        if (offset > timeseries.size()) {
+            return null;
+        }
+
         List<Double> initialPriceList = extractInitialPrices(timeseries, offset);
         PeriodPriceList priceList = new PeriodPriceList(initialPriceList, offset);
 

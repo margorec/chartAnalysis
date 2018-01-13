@@ -22,8 +22,8 @@ public class StooqParser {
         this.downloader = downloader;
     }
 
-    public Map<String, Double> downloadAndProcess() {
-        String data = downloader.download();
+    public Map<String, Double> downloadAndProcess(String assetSymbol) {
+        String data = downloader.download(assetSymbol);
         return parseToTimeseries(data);
     }
 

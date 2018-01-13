@@ -3,6 +3,7 @@ package com.marcingorecki.ChartAnalysis.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -16,11 +17,11 @@ public class Downloader {
     final String ASSET_DATA_URL = "https://stooq.pl/q/d/l/?s={symbol}&i=d";
     final String SYMBOL_TAG = "{symbol}";
 
+    @Cacheable("stockData")
     public String download(String assetSymbol) {
         RestTemplate restTemplate = new RestTemplate();
         LOG.info("Fetching data from {}", createUrl(assetSymbol));
         ResponseEntity<String> response = restTemplate.getForEntity(createUrl(assetSymbol), String.class);
-        LOG.info(response.getStatusCode().toString());
         if (!response.getStatusCode().equals(HttpStatus.OK)) {
             throw new IllegalStateException("Cannot download asset data");
         }

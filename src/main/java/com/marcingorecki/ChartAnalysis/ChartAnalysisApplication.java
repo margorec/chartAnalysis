@@ -2,10 +2,11 @@ package com.marcingorecki.ChartAnalysis;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 
+@EnableCaching
 @SpringBootApplication
 public class ChartAnalysisApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(ChartAnalysisApplication.class, args);
 	}

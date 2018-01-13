@@ -4,6 +4,9 @@ public class Asset {
 
     private String symbol;
 
+    public Asset() {
+    }
+
     public Asset(String symbol) {
         this.symbol = symbol;
     }

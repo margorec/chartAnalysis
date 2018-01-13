@@ -23,11 +23,11 @@ public class ChartController {
     private static final String DEFAULT_SYMBOL = "PLY";
 
     private final StooqParser parser;
-    private final TimeseriesProcessor timeseriesProcessor;
+    private final TimeseriesProcessor timeseriesService;
 
     @Autowired
     public ChartController(StooqParser parser, TimeseriesProcessor timeseriesProcessor) {
-        this.timeseriesProcessor = timeseriesProcessor;
+        this.timeseriesService = timeseriesProcessor;
         this.parser = parser;
     }
 
@@ -53,8 +53,8 @@ public class ChartController {
 
     private Map<String, Triplet> prepareData(String assetSymbol) {
         Map<String, Double> data = parser.downloadAndProcess(assetSymbol);
-        Map<String, Double> shortMovingAvg = timeseriesProcessor.getMovingAverage(data, 5);
-        Map<String, Double> longMovingAvg = timeseriesProcessor.getMovingAverage(data, 30);
+        Map<String, Double> shortMovingAvg = timeseriesService.getMovingAverage(data, timeseriesService.shortAvgRange(data.size()));
+        Map<String, Double> longMovingAvg = timeseriesService.getMovingAverage(data, timeseriesService.longAvgRange(data.size()));
 
         if (shortMovingAvg == null || longMovingAvg == null) {
             throw new IllegalArgumentException("Cannot get moving average for this symbol");

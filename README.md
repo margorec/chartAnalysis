@@ -1,5 +1,5 @@
 ## Chart Analysis [![Build Status](https://travis-ci.org/margorec/chartAnalysis.svg?branch=master)](https://travis-ci.org/margorec/chartAnalysis)
-> Check the latest beta build [here at AWS Elastic Beanstalk](http://chart-analysis.eu-central-1.elasticbeanstalk.com/)
+> Check the latest beta build [here at AWS Elastic Beanstalk](http://chart-analysis.eu-central-1.elasticbeanstalk.com/chart/)
 
 Its a stock market analysing app. So far:
   - it downloads stock data from stooq.pl

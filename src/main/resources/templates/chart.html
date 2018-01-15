@@ -42,12 +42,12 @@
                 title: 'Price'
             },
             'chartArea': {'width': '80%', 'height': '90%'},
-
+            legend: { position: 'bottom' },
             curveType: 'function',
             series: {
-                0: { lineDashStyle: [1, 1], color: '#43459d' },
-                1: {  },
-                2: {  }
+                0: { lineDashStyle: [1, 1], color: '#34495E' },
+                1: { color: '#C0392B' },
+                2: { color: '#16A085' }
             }
 
 
@@ -57,6 +57,8 @@
 
         chart.draw(data, options);
         }
+
+
     </script>
 </head>
 <body>
@@ -70,10 +72,12 @@
             <a class="navbar-brand" href="#">Stock Analysis</a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse-01">
-            <form class="navbar-form navbar-right" method="post" action="#" th:action="@{/chart}" th:object="${asset}" role="search">
+            <form class="navbar-form navbar-right" method="GET" action="#" th:action="@{/chart}" th:object="${asset}"
+                  role="search">
                 <div class="form-group">
                     <div class="input-group">
-                        <input class="form-control" id="navbarInput-01" type="search" th:field="*{symbol}" placeholder="Search" />
+                        <input class="form-control" id="navbarInput-01" type="search" th:field="*{symbol}"
+                               placeholder="Search"/>
                         <span class="input-group-btn">
                       <button type="submit" class="btn"><span class="fui-search"></span></button>
                     </span>
@@ -86,14 +90,23 @@
 
 <div class="container">
     <div class="">
-        <h4 th:inline="text" >
+        <h6 th:inline="text">
             [[${asset.symbol}]]
-        </h4>
+        </h6>
+        <a th:href="@{'/chart'(symbol=${asset.symbol},period=MAX)}">MAX</a>&nbsp;&nbsp;
+        <a th:href="@{'/chart'(symbol=${asset.symbol},period=Y3)}">3Y</a>&nbsp;&nbsp;
+        <a th:href="@{'/chart'(symbol=${asset.symbol},period=Y1)}">1Y</a>&nbsp;&nbsp;
+        <a th:href="@{'/chart'(symbol=${asset.symbol},period=M3)}">3M</a>&nbsp;&nbsp;
     </div>
 </div>
 <!-- /.container -->
 
+<div class="col-xs-3">
+
+</div>
+
 <div id="chart_div"></div>
+
 <script src="js/vendor/jquery.min.js"></script>
 <script src="js/flat-ui.min.js"></script>
 </body>

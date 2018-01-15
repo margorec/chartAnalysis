@@ -37,6 +37,7 @@ public class TimeseriesProcessor {
         return initialValues.subList(0, offset);
     }
 
+
     public int shortAvgRange(int size) {
         int result = (int) Math.floor(size / SHORT_MVGAVG_FACTOR);
         return result > MAX_SHORT_MVGAVG_FACTOR ? MAX_SHORT_MVGAVG_FACTOR : result;

@@ -1,18 +1,20 @@
 package com.marcingorecki.ChartAnalysis.controller;
 
 import com.marcingorecki.ChartAnalysis.domain.Asset;
+import com.marcingorecki.ChartAnalysis.domain.Period;
 import com.marcingorecki.ChartAnalysis.domain.Triplet;
 import com.marcingorecki.ChartAnalysis.service.StooqParser;
+import com.marcingorecki.ChartAnalysis.service.TimeService;
 import com.marcingorecki.ChartAnalysis.service.TimeseriesProcessor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -24,34 +26,33 @@ public class ChartController {
 
     private final StooqParser parser;
     private final TimeseriesProcessor timeseriesService;
+    private final TimeService timeService;
 
     @Autowired
-    public ChartController(StooqParser parser, TimeseriesProcessor timeseriesProcessor) {
+    public ChartController(StooqParser parser, TimeseriesProcessor timeseriesProcessor, TimeService timeService) {
         this.timeseriesService = timeseriesProcessor;
         this.parser = parser;
+        this.timeService = timeService;
     }
 
-    @PostMapping("/chart")
-    public String selectAssetSybmol(Map<String, Object> model, @ModelAttribute Asset asset) {
-        model.put("chartData", prepareData(asset.getSymbol()));
+    @RequestMapping(value = "chart", method = RequestMethod.GET)
+    public String selectAssetSybmol(Map<String, Object> model,
+                                    @RequestParam(required = false, name = "symbol") Optional<String> symbol,
+                                    @RequestParam(required = false, name = "period") Optional<Period> period) {
+        if (!symbol.isPresent()) {
+            symbol = Optional.of(DEFAULT_SYMBOL);
+        }
+
+        if (!period.isPresent()) {
+            period = Optional.of(Period.Y1);
+        }
+
+        model.put("asset", new Asset(symbol.get().toUpperCase()));
+        model.put("chartData", prepareData(symbol.get().toUpperCase(), period.get()));
         return VIEW_NAME;
     }
 
-    @GetMapping("/chart/{symbol}")
-    public String selectAssetSybmol(Map<String, Object> model, @PathVariable String symbol) {
-        model.put("asset", new Asset(symbol));
-        model.put("chartData", prepareData(symbol));
-        return VIEW_NAME;
-    }
-
-    @GetMapping("/chart")
-    public String showDefaultChart(Map<String, Object> model) {
-        model.put("asset", new Asset(DEFAULT_SYMBOL));
-        model.put("chartData", prepareData(DEFAULT_SYMBOL));
-        return VIEW_NAME;
-    }
-
-    private Map<String, Triplet> prepareData(String assetSymbol) {
+    private Map<String, Triplet> prepareData(String assetSymbol, Period period) {
         Map<String, Double> data = parser.downloadAndProcess(assetSymbol);
         Map<String, Double> shortMovingAvg = timeseriesService.getMovingAverage(data, timeseriesService.shortAvgRange(data.size()));
         Map<String, Double> longMovingAvg = timeseriesService.getMovingAverage(data, timeseriesService.longAvgRange(data.size()));
@@ -60,13 +61,15 @@ public class ChartController {
             throw new IllegalArgumentException("Cannot get moving average for this symbol");
         }
 
-        return data.keySet()
+        TreeMap<String, Triplet> result = data.keySet()
                 .stream()
                 .collect(Collectors.toMap(
                         Function.identity(),
                         k -> new Triplet(data.get(k), shortMovingAvg.get(k), longMovingAvg.get(k)),
-                        (a, b) -> a, LinkedHashMap::new
+                        (a, b) -> a, TreeMap::new
                 ));
+
+        return result.tailMap(timeService.getBackwardDate(period));
     }
 
 }

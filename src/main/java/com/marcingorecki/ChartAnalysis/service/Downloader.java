@@ -22,7 +22,7 @@ public class Downloader {
     final String SYMBOL_TAG = "{symbol}";
 
     @Cacheable(STOCK_DATA_CACHE)
-    public String download(String assetSymbol) {
+    public Optional<String> download(String assetSymbol) {
         RestTemplate restTemplate = new RestTemplate();
         String url = createUrl(assetSymbol);
         LOG.info("Fetching data from {}", url);

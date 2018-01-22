@@ -12,12 +12,14 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class Downloader {
 
+    public static final String STOCK_DATA_CACHE = "stockData";
+
     private static final Logger LOG = LoggerFactory.getLogger(Downloader.class);
 
     final String ASSET_DATA_URL = "https://stooq.pl/q/d/l/?s={symbol}&i=d";
     final String SYMBOL_TAG = "{symbol}";
 
-    @Cacheable("stockData")
+    @Cacheable(STOCK_DATA_CACHE)
     public String download(String assetSymbol) {
         RestTemplate restTemplate = new RestTemplate();
         LOG.info("Fetching data from {}", createUrl(assetSymbol));

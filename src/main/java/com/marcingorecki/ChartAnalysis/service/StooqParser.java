@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class StooqParser {
@@ -23,13 +24,17 @@ public class StooqParser {
     }
 
     public Map<String, Double> downloadAndProcess(String assetSymbol) {
-        String data = downloader.download(assetSymbol);
+        Optional<String> data = downloader.download(assetSymbol);
         return parseToTimeseries(data);
     }
 
-    private Map<String, Double> parseToTimeseries(String data) {
+    Map<String, Double> parseToTimeseries(Optional<String> data) {
         Map<String, Double> result = new LinkedHashMap<>();
-        String[] lines = data.split(NEW_LINE_DELIMITER);
+        if (!data.isPresent()) {
+            return result;
+        }
+
+        String[] lines = data.get().split(NEW_LINE_DELIMITER);
         Arrays.stream(lines).skip(1).forEach(line -> {
             String[] fields = line.split(FIELD_DELIMITER);
             result.put(timeService.parseDate(fields[0]), Double.valueOf(fields[3]));

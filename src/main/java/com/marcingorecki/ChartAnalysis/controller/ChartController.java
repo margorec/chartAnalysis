@@ -35,7 +35,7 @@ public class ChartController {
         this.timeService = timeService;
     }
 
-    @RequestMapping(value = "chart", method = RequestMethod.GET)
+    @RequestMapping(value = VIEW_NAME, method = RequestMethod.GET)
     public String selectAssetSybmol(Map<String, Object> model,
                                     @RequestParam(required = false, name = "symbol") Optional<String> symbol,
                                     @RequestParam(required = false, name = "period") Optional<Period> period) {

@@ -30,7 +30,10 @@ public class StooqParser {
 
     public Map<String, Double> downloadAndProcess(String assetSymbol) {
         Optional<String> data = downloader.download(assetSymbol);
-        return parseToTimeseries(data);
+        if (!data.isPresent()){
+            return new LinkedHashMap<>();
+        }
+        return parseToTimeseries(data.get());
     }
 
     Map<String, Double> parseToTimeseries(String data) {

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -28,7 +29,7 @@ public class StooqParser {
     }
 
     public Map<String, Double> downloadAndProcess(String assetSymbol) {
-        String data = downloader.download(assetSymbol);
+        Optional<String> data = downloader.download(assetSymbol);
         return parseToTimeseries(data);
     }
 

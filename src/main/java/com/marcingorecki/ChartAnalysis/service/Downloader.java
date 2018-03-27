@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Optional;
+
 @Component
 public class Downloader {
 
@@ -20,14 +22,22 @@ public class Downloader {
     final String SYMBOL_TAG = "{symbol}";
 
     @Cacheable(STOCK_DATA_CACHE)
-    public String download(String assetSymbol) {
+    public Optional<String> download(String assetSymbol) {
         RestTemplate restTemplate = new RestTemplate();
-        LOG.info("Fetching data from {}", createUrl(assetSymbol));
-        ResponseEntity<String> response = restTemplate.getForEntity(createUrl(assetSymbol), String.class);
-        if (!response.getStatusCode().equals(HttpStatus.OK)) {
-            throw new IllegalStateException("Cannot download asset data");
+        String url = createUrl(assetSymbol);
+        LOG.info("Fetching data from {}", url);
+        try {
+            ResponseEntity<String> response = restTemplate.getForEntity(createUrl(assetSymbol), String.class);
+            if (!response.getStatusCode().equals(HttpStatus.OK)) {
+                LOG.warn("Cannot download asset data. {} responded with {}", url, response.getStatusCode());
+                return Optional.ofNullable(null);
+            }
+            return Optional.of(response.getBody());
+        } catch (Exception e) {
+            LOG.warn("Cannot download asset data, cause of {}", e.getCause().toString());
+            return Optional.ofNullable(null);
         }
-        return response.getBody();
+
     }
 
     String createUrl(String symbol) {

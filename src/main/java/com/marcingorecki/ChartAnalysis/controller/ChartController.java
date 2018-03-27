@@ -23,6 +23,7 @@ public class ChartController {
 
     private static final String VIEW_NAME = "chart";
     private static final String DEFAULT_SYMBOL = "PLY";
+    private static final String DEFAULT_PERIOD = "Y1";
 
     private final StooqParser parser;
     private final TimeseriesProcessor timeseriesService;
@@ -37,29 +38,17 @@ public class ChartController {
 
     @RequestMapping(value = VIEW_NAME, method = RequestMethod.GET)
     public String selectAssetSybmol(Map<String, Object> model,
-                                    @RequestParam(required = false, name = "symbol") Optional<String> symbol,
-                                    @RequestParam(required = false, name = "period") Optional<Period> period) {
-        if (!symbol.isPresent()) {
-            symbol = Optional.of(DEFAULT_SYMBOL);
-        }
-
-        if (!period.isPresent()) {
-            period = Optional.of(Period.Y1);
-        }
-
+                                    @RequestParam(required = false, name = "symbol", defaultValue = DEFAULT_SYMBOL) Optional<String> symbol,
+                                    @RequestParam(required = false, name = "period", defaultValue = DEFAULT_PERIOD) Optional<String> period) {
         model.put("asset", new Asset(symbol.get().toUpperCase()));
         model.put("chartData", prepareData(symbol.get().toUpperCase(), period.get()));
         return VIEW_NAME;
     }
 
-    private Map<String, Triplet> prepareData(String assetSymbol, Period period) {
+    private Map<String, Triplet> prepareData(String assetSymbol, String period) {
         Map<String, Double> data = parser.downloadAndProcess(assetSymbol);
         Map<String, Double> shortMovingAvg = timeseriesService.getMovingAverage(data, timeseriesService.shortAvgRange(data.size()));
         Map<String, Double> longMovingAvg = timeseriesService.getMovingAverage(data, timeseriesService.longAvgRange(data.size()));
-
-        if (shortMovingAvg == null || longMovingAvg == null) {
-            throw new IllegalArgumentException("Cannot get moving average for this symbol");
-        }
 
         TreeMap<String, Triplet> result = data.keySet()
                 .stream()

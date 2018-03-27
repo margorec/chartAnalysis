@@ -12,8 +12,8 @@ public class TimeService {
 
     private static final DateTimeFormatter FORMATTER  = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    public String getBackwardDate(Period period) {
-        return getBackwardDateFrom(period, LocalDate.now());
+    public String getBackwardDate(String period) {
+        return getBackwardDateFrom(Period.valueOf(period), LocalDate.now());
     }
 
     public String getBackwardDateFrom(Period period, LocalDate date) {

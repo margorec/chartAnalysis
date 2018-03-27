@@ -16,7 +16,7 @@ public class TimeseriesProcessor {
 
     public Map<String, Double> getMovingAverage(Map<String, Double> timeseries, int offset) {
         if (offset > timeseries.size()) {
-            return null;
+            throw new IllegalArgumentException("Cannot get moving average for this symbol");
         }
 
         List<Double> initialPriceList = extractInitialPrices(timeseries, offset);
@@ -36,7 +36,6 @@ public class TimeseriesProcessor {
         List<Double> initialValues = new LinkedList<>(timeseries.values());
         return initialValues.subList(0, offset);
     }
-
 
     public int shortAvgRange(int size) {
         int result = (int) Math.floor(size / SHORT_MVGAVG_FACTOR);

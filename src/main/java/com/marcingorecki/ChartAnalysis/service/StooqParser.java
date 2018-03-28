@@ -16,6 +16,7 @@ public class StooqParser {
     private static final String FIELD_DELIMITER = ",";
     private static final String NEW_LINE_DELIMITER = "\\r?\\n";
     private static final int FINAL_PRICE_FIELD_INDEX = 3;
+    private static final String NO_DATA_FOR_SYMBOL = "Brak danych";
     private int DATE_FIELD_INDEX = 0;
     private static final long HEADER_LINES = 1;
 
@@ -30,10 +31,17 @@ public class StooqParser {
 
     public Map<String, Double> downloadAndProcess(String assetSymbol) {
         Optional<String> data = downloader.download(assetSymbol);
-        if (!data.isPresent()){
-            return new LinkedHashMap<>();
-        }
+        validateData(data);
         return parseToTimeseries(data.get());
+    }
+
+    void validateData(Optional<String> data) {
+        if (!data.isPresent()){
+            throw new IllegalArgumentException("Error on fetching stock data");
+        }
+        if (data.get().equals(NO_DATA_FOR_SYMBOL)) {
+            throw new IllegalArgumentException("No symbol found");
+        }
     }
 
     Map<String, Double> parseToTimeseries(String data) {

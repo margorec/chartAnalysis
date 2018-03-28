@@ -3,6 +3,8 @@ package com.marcingorecki.ChartAnalysis.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mockito;
 
 import java.util.Map;
@@ -10,12 +12,14 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.data.MapEntry.entry;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.when;
 
 class StooqParserTest {
 
+    private static final String FETCH_DATA_ERROR = "Error on fetching stock data" ;
     private final Downloader downloader = Mockito.mock(Downloader.class);
     private final TimeService timeService = Mockito.spy(new TimeService());
     private StooqParser subject;
@@ -56,5 +60,18 @@ class StooqParserTest {
         // Then
         Mockito.verify(downloader, times(1)).download(dummySymbol);
     }
+
+    @Test
+    @DisplayName("Should throw exception on invalid data")
+    void shallValidateData() {
+        // Given
+        Optional<String> invalidData = Optional.ofNullable(null);
+        Executable closureContainingCodeToTest = () -> subject.validateData(invalidData);
+
+        // When
+        // Then
+        assertThrows(IllegalArgumentException.class, closureContainingCodeToTest, FETCH_DATA_ERROR);
+    }
+
 
 }

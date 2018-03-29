@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.net.SocketTimeoutException;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
@@ -23,7 +24,6 @@ import java.util.stream.Collectors;
 public class ChartController {
 
     private static final String CHART_VIEW_NAME = "chart";
-    private static final String FAILOVER_VIEW_NAME = "failover";
     private static final String DEFAULT_SYMBOL = "PLY";
     private static final String DEFAULT_PERIOD = "Y1";
 
@@ -63,8 +63,4 @@ public class ChartController {
         return result.tailMap(timeService.getBackwardDate(period));
     }
 
-    @ExceptionHandler(IllegalArgumentException.class)
-    public String exceptionHandler() {
-        return FAILOVER_VIEW_NAME;
-    }
 }

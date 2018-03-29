@@ -37,7 +37,9 @@
 <!-- /.container -->
 
 <div class="form-group has-error">
-    <p>Error on processing data. Select another asset by search</p>
+    <h4 th:inline="text">
+        [[${errorMessage}]]
+    </h4>
 </div>
 
 <script src="js/vendor/jquery.min.js"></script>

@@ -12,9 +12,9 @@ public class CacheManagementService {
     private static final Logger LOG = LoggerFactory.getLogger(CacheManagementService.class);
 
     @Scheduled(cron = "0 0 * * * *")
-    @CacheEvict(value = { Downloader.STOCK_DATA_CACHE })
+    @CacheEvict(value = { StooqDownloader.STOCK_DATA_CACHE })
     public void clearCache() {
-        LOG.info("Invalidating {} cache", Downloader.STOCK_DATA_CACHE);
+        LOG.info("Invalidating {} cache", StooqDownloader.STOCK_DATA_CACHE);
     }
 
 }

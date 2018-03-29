@@ -20,11 +20,11 @@ public class StooqParser {
     private int DATE_FIELD_INDEX = 0;
     private static final long HEADER_LINES = 1;
 
-    private final Downloader downloader;
+    private final StooqDownloader downloader;
     private TimeService timeService;
 
     @Autowired
-    public StooqParser(Downloader downloader, TimeService timeService) {
+    public StooqParser(StooqDownloader downloader, TimeService timeService) {
         this.downloader = downloader;
         this.timeService = timeService;
     }

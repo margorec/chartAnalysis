@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 class StooqParserTest {
 
     private static final String FETCH_DATA_ERROR = "Error on fetching stock data" ;
-    private final Downloader downloader = Mockito.mock(Downloader.class);
+    private final StooqDownloader downloader = Mockito.mock(StooqDownloader.class);
     private final TimeService timeService = Mockito.spy(new TimeService());
     private StooqParser subject;
 

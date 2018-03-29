@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Error page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="../css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="../../css/flat-ui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
+
+<div class="col-xs-12">
+    <nav class="navbar navbar-inverse navbar-embossed" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-01">
+                <span class="sr-only">Toggle navigation</span>
+            </button>
+            <a class="navbar-brand" href="#">Stock Analysis</a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse-01">
+            <form class="navbar-form navbar-right" method="GET" action="#" th:action="@{/chart}"
+                  role="search">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input class="form-control" id="navbarInput-01" type="search"
+                               placeholder="Search"/>
+                        <span class="input-group-btn">
+                      <button type="submit" class="btn"><span class="fui-search"></span></button>
+                    </span>
+                    </div>
+                </div>
+            </form>
+        </div><!-- /.navbar-collapse -->
+    </nav><!-- /navbar -->
+</div>
+
+<!-- /.container -->
+
+<div class="form-group has-error">
+    <p>Error on processing data. Select another asset by search</p>
+</div>
+
+<script src="js/vendor/jquery.min.js"></script>
+<script src="js/flat-ui.min.js"></script>
+</body>
+</html>

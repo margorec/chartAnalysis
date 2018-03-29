@@ -1,7 +1,5 @@
 package com.marcingorecki.ChartAnalysis.service;
 
-
-import com.sun.org.apache.regexp.internal.RE;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -50,12 +48,10 @@ public class StooqDownloader {
 
     RestTemplate buildRestTemplate() {
         RestTemplateBuilder builder = new RestTemplateBuilder();
-        LOG.info("Starting rest template with r:timeout{} c:timeout{}", CONNECTION_TIMEOUT, READ_TIMEOUT);
         return builder.
                 setConnectTimeout(CONNECTION_TIMEOUT).
                 setReadTimeout(READ_TIMEOUT).
                 build();
     }
-
 
 }

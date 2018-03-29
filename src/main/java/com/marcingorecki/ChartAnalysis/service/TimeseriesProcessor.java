@@ -25,10 +25,7 @@ public class TimeseriesProcessor {
         return timeseries.entrySet()
                 .stream()
                 .skip(offset)
-                .map(e -> {
-                    priceList.add(e.getValue());
-                    return e;
-                })
+                .peek(e -> priceList.add(e.getValue()))
                 .collect(Collectors.toMap(Map.Entry::getKey, e -> priceList.average(), (a, b) -> a, LinkedHashMap::new));
     }
 

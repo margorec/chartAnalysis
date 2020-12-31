@@ -1,7 +1,6 @@
-package com.marcingorecki.ChartAnalysis.service;
+package com.marcingorecki.charts.service;
 
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Component;

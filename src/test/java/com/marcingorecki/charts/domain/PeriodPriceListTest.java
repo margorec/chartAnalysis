@@ -1,4 +1,4 @@
-package com.marcingorecki.ChartAnalysis.domain;
+package com.marcingorecki.charts.domain;
 
 import org.junit.jupiter.api.Test;
 

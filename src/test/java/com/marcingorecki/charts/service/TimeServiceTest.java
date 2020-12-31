@@ -1,6 +1,6 @@
-package com.marcingorecki.ChartAnalysis.service;
+package com.marcingorecki.charts.service;
 
-import com.marcingorecki.ChartAnalysis.domain.Period;
+import com.marcingorecki.charts.domain.Period;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

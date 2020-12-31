@@ -1,6 +1,6 @@
-package com.marcingorecki.ChartAnalysis.service;
+package com.marcingorecki.charts.service;
 
-import com.marcingorecki.ChartAnalysis.domain.PeriodPriceList;
+import com.marcingorecki.charts.domain.PeriodPriceList;
 import org.springframework.stereotype.Service;
 
 import java.util.*;

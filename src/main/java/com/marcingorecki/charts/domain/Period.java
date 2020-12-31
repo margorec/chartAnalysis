@@ -1,4 +1,4 @@
-package com.marcingorecki.ChartAnalysis.domain;
+package com.marcingorecki.charts.domain;
 
 public enum Period {
     Y3(1095, "3Y"), Y1(365, "1Y"), M3(92, "3M"), MAX(Integer.MAX_VALUE, "MAX");

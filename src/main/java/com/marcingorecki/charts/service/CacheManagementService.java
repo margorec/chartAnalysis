@@ -1,4 +1,4 @@
-package com.marcingorecki.ChartAnalysis.service;
+package com.marcingorecki.charts.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

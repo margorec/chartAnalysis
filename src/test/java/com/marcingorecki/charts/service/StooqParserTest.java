@@ -1,4 +1,4 @@
-package com.marcingorecki.ChartAnalysis.service;
+package com.marcingorecki.charts.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

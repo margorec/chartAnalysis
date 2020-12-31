@@ -1,4 +1,4 @@
-package com.marcingorecki.ChartAnalysis.domain;
+package com.marcingorecki.charts.domain;
 
 import java.util.Objects;
 

@@ -1,7 +1,7 @@
 ## Chart Analysis [![Build Status](https://travis-ci.org/margorec/chartAnalysis.svg?branch=master)](https://travis-ci.org/margorec/chartAnalysis)
-> Check the latest beta build [here at Heroku](https://cryptic-atoll-12670.herokuapp.com/chart/)
+ Check the latest beta build [here at Heroku](https://cryptic-atoll-12670.herokuapp.com/chart/)
 
-#### TODOS:
+#### Description:
 Its a very simple stock market analysing app. So far:
   - it downloads stock data from stooq.pl 
   - presents price time series for one company and draws a *end day* price chart

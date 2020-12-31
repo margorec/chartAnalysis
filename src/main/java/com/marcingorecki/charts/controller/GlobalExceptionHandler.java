@@ -1,4 +1,4 @@
-package com.marcingorecki.ChartAnalysis.controller;
+package com.marcingorecki.charts.controller;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;

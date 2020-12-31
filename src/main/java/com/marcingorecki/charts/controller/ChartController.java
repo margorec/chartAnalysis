@@ -1,11 +1,11 @@
-package com.marcingorecki.ChartAnalysis.controller;
+package com.marcingorecki.charts.controller;
 
-import com.marcingorecki.ChartAnalysis.domain.Asset;
-import com.marcingorecki.ChartAnalysis.domain.Triplet;
-import com.marcingorecki.ChartAnalysis.service.SessionService;
-import com.marcingorecki.ChartAnalysis.service.StooqParser;
-import com.marcingorecki.ChartAnalysis.service.TimeService;
-import com.marcingorecki.ChartAnalysis.service.TimeseriesProcessor;
+import com.marcingorecki.charts.domain.Asset;
+import com.marcingorecki.charts.domain.Triplet;
+import com.marcingorecki.charts.service.SessionService;
+import com.marcingorecki.charts.service.StooqParser;
+import com.marcingorecki.charts.service.TimeService;
+import com.marcingorecki.charts.service.TimeseriesProcessor;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
@@ -31,8 +31,6 @@ public class ChartController {
     private final TimeseriesProcessor timeseriesService;
     private final TimeService timeService;
     private final SessionService sessionService;
-
-    private final int SYMBOLS_TO_SHOW = 5;
 
     @Autowired
     public ChartController(StooqParser parser, TimeseriesProcessor timeseriesProcessor, TimeService timeService,

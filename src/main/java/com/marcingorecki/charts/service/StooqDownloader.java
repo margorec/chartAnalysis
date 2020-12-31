@@ -1,4 +1,4 @@
-package com.marcingorecki.ChartAnalysis.service;
+package com.marcingorecki.charts.service;
 
 import java.time.Duration;
 import java.util.Optional;

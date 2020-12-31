@@ -5,11 +5,11 @@
 Its a very simple stock market analysing app. So far:
   - it downloads stock data from stooq.pl 
   - presents price time series for one company and draws a *end day* price chart
-  - basing on fetched data it calulates moving averages 
+  - basing on fetched data it calculates moving averages 
   - draws long and short moving averages on chart automatically adjusted
   
 ##### TODOS:
-[x] Migrated to SpringBoot 2.x
-[ ] Proper error handle when non existing asset propmpted
+- [x] Migrated to SpringBoot 2.x
+- [ ] Proper error handle when non existing asset prompted
 
 

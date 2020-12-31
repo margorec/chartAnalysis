@@ -1,5 +1,7 @@
 package com.marcingorecki.ChartAnalysis.service;
 
+import java.time.Duration;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -9,8 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Optional;
 
 @Component
 public class StooqDownloader {
@@ -22,11 +22,10 @@ public class StooqDownloader {
     public static final String STOCK_DATA_CACHE = "stockData";
 
     @Value("${stooq.ServerConnectionTimeout}")
-    private int CONNECTION_TIMEOUT;
+    private Duration CONNECTION_TIMEOUT;
 
     @Value("${stooq.ServerReadTimeout}")
-    private int READ_TIMEOUT;
-
+    private Duration READ_TIMEOUT;
 
     @Cacheable(STOCK_DATA_CACHE)
     public Optional<String> download(String assetSymbol) {

@@ -6,4 +6,6 @@ Its a stock market analysing app. So far:
   - presents price time series for one company and draws a *end day* price chart
   - basing on fetched data it calulates moving averages 
   - draws long and short moving averages on chart automatically adjusted
+  
+[ ] Migrated to SpringBoot 2.x 
 

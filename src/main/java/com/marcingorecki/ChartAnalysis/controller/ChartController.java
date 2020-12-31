@@ -2,23 +2,21 @@ package com.marcingorecki.ChartAnalysis.controller;
 
 import com.marcingorecki.ChartAnalysis.domain.Asset;
 import com.marcingorecki.ChartAnalysis.domain.Triplet;
+import com.marcingorecki.ChartAnalysis.service.SessionService;
 import com.marcingorecki.ChartAnalysis.service.StooqParser;
 import com.marcingorecki.ChartAnalysis.service.TimeService;
 import com.marcingorecki.ChartAnalysis.service.TimeseriesProcessor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ControllerAdvice;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.net.SocketTimeoutException;
 import java.util.Map;
 import java.util.Optional;
 import java.util.TreeMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import javax.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ChartController {
@@ -30,20 +28,25 @@ public class ChartController {
     private final StooqParser parser;
     private final TimeseriesProcessor timeseriesService;
     private final TimeService timeService;
+    private final SessionService sessionService;
 
     @Autowired
-    public ChartController(StooqParser parser, TimeseriesProcessor timeseriesProcessor, TimeService timeService) {
+    public ChartController(StooqParser parser, TimeseriesProcessor timeseriesProcessor, TimeService timeService, SessionService sessionService) {
         this.timeseriesService = timeseriesProcessor;
         this.parser = parser;
         this.timeService = timeService;
+        this.sessionService = sessionService;
     }
 
     @RequestMapping(value = CHART_VIEW_NAME, method = RequestMethod.GET)
     public String selectAssetSybmol(Map<String, Object> model,
-                                    @RequestParam(required = false, name = "symbol", defaultValue = DEFAULT_SYMBOL) Optional<String> symbol,
-                                    @RequestParam(required = false, name = "period", defaultValue = DEFAULT_PERIOD) Optional<String> period) {
+                                    @RequestParam(required = false, value = "symbol", defaultValue = DEFAULT_SYMBOL) Optional<String> symbol,
+                                    @RequestParam(required = false, value = "period", defaultValue = DEFAULT_PERIOD) Optional<String> period,
+                                    final HttpSession session) {
+        symbol.ifPresentOrElse( s -> sessionService.storeSymbol(s, session), ()-> System.out.println("No symbol to store"));
         model.put("asset", new Asset(symbol.get().toUpperCase()));
         model.put("chartData", prepareData(symbol.get().toUpperCase(), period.get()));
+        sessionService.getPreviousSymbols(session);
         return CHART_VIEW_NAME;
     }
 

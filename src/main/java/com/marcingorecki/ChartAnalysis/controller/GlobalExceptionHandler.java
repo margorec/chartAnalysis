@@ -1,12 +1,10 @@
 package com.marcingorecki.ChartAnalysis.controller;
 
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.net.SocketTimeoutException;
 
-@ControllerAdvice
 public class GlobalExceptionHandler {
 
     private static final String FAILOVER_VIEW_NAME = "failover";

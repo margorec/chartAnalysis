@@ -90,9 +90,16 @@
 
 <div class="container">
     <div class="">
-        <h6 th:inline="text">
-            [[${asset.symbol}]]
-        </h6>
+        <div th:unless=" ${#lists.isEmpty(symbols)}">
+            Previous searches:
+            <div th:each="currentSymbol : ${symbols}">
+                <a th:href="@{'/chart'(symbol=${currentSymbol})}">[[${currentSymbol}]]</a>&nbsp;&nbsp;
+            </div>
+        </div>
+
+        <div>
+            Name: <b>[[${asset.symbol}]]</b>
+        </div>
         <a th:href="@{'/chart'(symbol=${asset.symbol},period=MAX)}">MAX</a>&nbsp;&nbsp;
         <a th:href="@{'/chart'(symbol=${asset.symbol},period=Y3)}">3Y</a>&nbsp;&nbsp;
         <a th:href="@{'/chart'(symbol=${asset.symbol},period=Y1)}">1Y</a>&nbsp;&nbsp;
@@ -101,9 +108,7 @@
 </div>
 <!-- /.container -->
 
-<div class="col-xs-3">
-
-</div>
+<div class="col-xs-3"></div>
 
 <div id="chart_div"></div>
 
